@@ -1,0 +1,25 @@
+.movie-details-page {
+    text-align: center;
+    padding: 2rem;
+}
+
+.movie-details-page img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.movie-details-page p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .movie-details-page {
+        padding: 1rem;
+    }
+
+    .movie-details-page p {
+        font-size: 1rem;
+    }
+}

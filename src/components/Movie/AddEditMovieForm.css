@@ -1,0 +1,21 @@
+.movie-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-container {
+    margin-bottom: 1rem;
+}
+
+.rating-container {
+    margin-bottom: 1rem;
+}
+
+.button {
+    display: block;
+    width: 100%;
+}

@@ -1,25 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { rateMovie, reviewMovie } from "../redux/actions/movieActions";
 
-const MovieDetails = ({ movie }) => {
+const MovieDetailsPage = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const movie = useSelector((state) =>
+    state.movies.movies.find((movie) => movie.id === parseInt(id))
+  );
+
+  const [rating, setRating] = useState(movie.rating || 0);
+  const [review, setReview] = useState(movie.review || "");
+
+  const handleRatingChange = (e) => {
+    setRating(e.target.value);
+    dispatch(rateMovie(movie.id, e.target.value));
+  };
+
+  const handleReviewChange = (e) => {
+    setReview(e.target.value);
+    dispatch(reviewMovie(movie.id, e.target.value));
+  };
+
   return (
-    <div className="movie-details">
-      <img
-        src={movie.image || "https://via.placeholder.com/300x450"}
-        alt={movie.title}
-      />
-      <div className="content">
-        <div className="title">{movie.title}</div>
-        <div className="description">{movie.description}</div>
-        <div className="release-year">Released: {movie.releaseYear}</div>
-        <div className="genre">Genre: {movie.genre}</div>
-        <div className="watched">
-          {movie.watched ? "Watched" : "Not Watched"}
-        </div>
-        <div className="rating">Rating: {movie.rating || "Not Rated"}</div>
-        <div className="review">{movie.review || "No Review"}</div>
+    <div className="container">
+      <h2>{movie.title}</h2>
+      <p>{movie.description}</p>
+      <p>Release Year: {movie.releaseYear}</p>
+      <p>Genre: {movie.genre}</p>
+      <div className="rating">
+        <span>Rating:</span>
+        <select value={rating} onChange={handleRatingChange}>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+        </select>
+      </div>
+      <div className="review">
+        <span>Review:</span>
+        <textarea
+          value={review}
+          onChange={handleReviewChange}
+          placeholder="Write a review"
+          className="input"
+        ></textarea>
       </div>
     </div>
   );
 };
 
-export default MovieDetails;
+export default MovieDetailsPage;

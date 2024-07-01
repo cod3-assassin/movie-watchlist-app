@@ -1,0 +1,10 @@
+.add-edit-movie-page {
+    padding: 2rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .add-edit-movie-page {
+        padding: 1rem;
+    }
+}
