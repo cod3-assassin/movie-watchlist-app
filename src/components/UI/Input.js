@@ -1,13 +1,18 @@
 import React from "react";
-import "./Input.css";
+import "../../styles/input.css";
 
-const Input = ({ label, value, onChange, className = "", ...props }) => {
-  return (
-    <div className={`input-container ${className}`}>
-      {label && <label>{label}</label>}
-      <input value={value} onChange={onChange} {...props} />
-    </div>
-  );
-};
+const Input = ({ name, value, onChange, placeholder, required = false }) => (
+  <div className="input-group">
+    <input
+      type="text"
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      required={required}
+      className="input"
+    />
+  </div>
+);
 
 export default Input;

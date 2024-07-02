@@ -1,17 +1,28 @@
-// src/App.js
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./routes";
-import "./styles/global.css";
+import { FaFilm } from "react-icons/fa";
+import "./styles/headerFooter.css";
 
 const App = () => {
   return (
-    <Router>
-      <div className="header">
-        <h1>Movie Watchlist</h1>
-      </div>
+    <div className="app">
+      <header className="header">
+        <div className="header-container">
+          <div className="logo">
+            <FaFilm className="logo-icon" />
+            <h1>Movie Watchlist</h1>
+          </div>
+        </div>
+      </header>
+
       <Routes />
-    </Router>
+
+      <footer className="footer">
+        <div className="footer-container">
+          <p>&copy; 2024 Movie Watchlist. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
   );
 };
 

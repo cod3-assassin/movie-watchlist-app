@@ -1,76 +1,148 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addMovie, editMovie } from "../../redux/actions/movieActions";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
-import Rating from "../UI/Rating";
-import "./AddEditMovieForm.css";
+import "../../styles/form.css"; // Assuming you have a separate CSS file for form styling
 
 const AddEditMovieForm = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { movieId } = useParams();
   const dispatch = useDispatch();
-  const movies = useSelector((state) => state.movies.movies);
-  const movie = movies.find((movie) => movie.id === parseInt(id));
+  const navigate = useNavigate();
+  const movies = useSelector((state) => state.movies.movies || []);
+  const movie = movies.find((m) => m.id === movieId);
 
-  const [title, setTitle] = useState(movie ? movie.title : "");
-  const [description, setDescription] = useState(
-    movie ? movie.description : ""
-  );
-  const [releaseYear, setReleaseYear] = useState(
-    movie ? movie.releaseYear : ""
-  );
-  const [genre, setGenre] = useState(movie ? movie.genre : "");
-  const [rating, setRating] = useState(movie ? movie.rating : 0);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    releaseYear: "",
+    genre: "",
+    imageUrl: "",
+    rating: 0,
+    watched: false,
+    review: "",
+  });
+
+  useEffect(() => {
+    if (movieId && movie) {
+      setFormData({
+        title: movie.title || "",
+        description: movie.description || "",
+        releaseYear: movie.releaseYear || "",
+        genre: movie.genre || "",
+        imageUrl: movie.imageUrl || "",
+        rating: movie.rating || 0,
+        watched: movie.watched || false,
+        review: movie.review || "",
+      });
+    }
+  }, [movieId, movie]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newMovie = {
-      id: movie ? movie.id : Date.now(),
-      title,
-      description,
-      releaseYear,
-      genre,
-      rating,
-      watched: movie ? movie.watched : false,
-    };
-
-    if (movie) {
-      dispatch(editMovie(newMovie));
+    if (movieId) {
+      const updatedMovie = {
+        id: movieId,
+        ...formData,
+      };
+      dispatch(editMovie(updatedMovie));
     } else {
-      dispatch(addMovie(newMovie));
+      dispatch(addMovie(formData));
     }
-
     navigate("/");
   };
 
   return (
-    <form className="movie-form" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form">
       <Input
-        label="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        name="title"
+        value={formData.title}
+        onChange={handleChange}
+        placeholder="Title"
         required
+        className="form-input"
       />
       <Input
-        label="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        placeholder="Description"
+        className="form-input"
       />
       <Input
-        label="Release Year"
+        name="releaseYear"
+        value={formData.releaseYear}
+        onChange={handleChange}
+        placeholder="Release Year"
         type="number"
-        value={releaseYear}
-        onChange={(e) => setReleaseYear(e.target.value)}
+        min="1900"
+        max="2099"
+        className="form-input"
       />
       <Input
-        label="Genre"
-        value={genre}
-        onChange={(e) => setGenre(e.target.value)}
+        name="genre"
+        value={formData.genre}
+        onChange={handleChange}
+        placeholder="Genre"
+        className="form-input"
       />
-      <Rating value={rating} onChange={setRating} />
-      <Button type="submit">{movie ? "Update Movie" : "Add Movie"}</Button>
+      <Input
+        name="imageUrl"
+        value={formData.imageUrl}
+        onChange={handleChange}
+        placeholder="Image URL"
+        className="form-input"
+      />
+      <Input
+        type="number"
+        name="rating"
+        value={formData.rating}
+        onChange={handleChange}
+        placeholder="Rating (1-5)"
+        min="1"
+        max="5"
+        className="form-input"
+      />
+      <div className="form-checkbox">
+        <input
+          type="checkbox"
+          id="watched"
+          name="watched"
+          checked={formData.watched}
+          onChange={handleCheckboxChange}
+          className="form-checkbox-input"
+        />
+        <label htmlFor="watched" className="form-checkbox-label">
+          Watched
+        </label>
+      </div>
+      <Input
+        name="review"
+        value={formData.review}
+        onChange={handleChange}
+        placeholder="Review"
+        className="form-input"
+      />
+      <Button type="submit" className="form-button">
+        {movieId ? "Update Movie" : "Add Movie"}
+      </Button>
     </form>
   );
 };

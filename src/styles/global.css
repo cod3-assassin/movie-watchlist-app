@@ -2,39 +2,37 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+
 }
 
-.header {
-    background-color: #343a40;
+.app {
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    padding: 10px;
+    background-color: #007bff;
     color: white;
-    padding: 1rem;
-    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.container {
-    padding: 1rem;
-}
-
-@media (max-width: 768px) {
-    .header {
-        font-size: 1.2rem;
-    }
-
-    .container {
-        padding: 0.5rem;
-    }
-
-    .button {
-        font-size: 0.9rem;
-    }
-
-    .input-container input {
-        font-size: 0.9rem;
-    }
-
-    .rating-container .star {
-        font-size: 1.2rem;
-    }
+.btn:hover {
+    background-color: #0056b3;
 }

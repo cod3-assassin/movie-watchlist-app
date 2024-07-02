@@ -1,20 +1,18 @@
 import React from "react";
-import "./Rating.css";
 
-const Rating = ({ value, onChange }) => {
-  return (
-    <div className="rating-container">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={star}
-          className={`star ${value >= star ? "filled" : ""}`}
-          onClick={() => onChange(star)}
-        >
-          ★
-        </span>
-      ))}
-    </div>
+const Rating = ({ rating }) => {
+  const stars = Array.from({ length: 5 }, (_, index) => index + 1).map(
+    (star) => (
+      <span
+        key={star}
+        className={star <= rating ? "star-filled" : "star-empty"}
+      >
+        ★
+      </span>
+    )
   );
+
+  return <div className="rating">{stars}</div>;
 };
 
 export default Rating;
