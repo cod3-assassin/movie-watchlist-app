@@ -4,7 +4,7 @@ export const DELETE_MOVIE = "DELETE_MOVIE";
 export const TOGGLE_WATCHED = "TOGGLE_WATCHED";
 export const RATE_MOVIE = "RATE_MOVIE";
 export const REVIEW_MOVIE = "REVIEW_MOVIE";
-
+export const FETCH_MOVIES_SUCCESS = "FETCH_MOVIES_SUCCESS";
 export const addMovie = (movie) => ({
   type: ADD_MOVIE,
   payload: movie,
@@ -33,4 +33,8 @@ export const rateMovie = (id, rating) => ({
 export const reviewMovie = (id, review) => ({
   type: REVIEW_MOVIE,
   payload: { id, review },
+});
+export const fetchMoviesSuccess = (movies) => ({
+  type: FETCH_MOVIES_SUCCESS,
+  payload: movies,
 });

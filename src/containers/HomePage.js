@@ -1,14 +1,29 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import MovieCard from "../components/Movie/MovieCard";
 import AddEditMovieForm from "../components/Movie/AddEditMovieForm";
 import Button from "../components/UI/Button";
+import { fetchMoviesSuccess } from "../redux/actions/movieActions";
+import { getMovies } from "../services/movieService";
 
 const HomePage = () => {
   const movies = useSelector((state) => state.movies.movies);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [movieToEdit, setMovieToEdit] = useState(null);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await getMovies();
+        dispatch(fetchMoviesSuccess(response.data));
+      } catch (error) {
+        console.error("Failed to fetch movies", error);
+      }
+    };
+
+    fetchMovies();
+  }, [dispatch]);
   const handleAddMovie = () => {
     // Toggle form visibility
     setIsFormOpen((prevIsFormOpen) => !prevIsFormOpen);
