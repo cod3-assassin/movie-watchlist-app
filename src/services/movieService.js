@@ -1,12 +1,14 @@
 import axios from "axios";
 
-const getMovies = () => axios.get("/api/movies");
-const addMovie = (movie) => axios.post("/api/movies", movie);
-const editMovie = (id, movie) => axios.put(`/api/movies/${id}`, movie);
-const deleteMovie = (id) => axios.delete(`/api/movies/${id}`);
-const toggleWatched = (id, movie) => axios.put(`/api/movies/${id}`, movie);
-const rateMovie = (id, rating) => axios.put(`/api/movies/${id}`, { rating });
-const reviewMovie = (id, review) => axios.put(`/api/movies/${id}`, { review });
+const API_URL = process.env.API_URL || "http://localhost:5000/movies";
+
+const getMovies = () => axios.get(API_URL);
+const addMovie = (movie) => axios.post(API_URL, movie);
+const editMovie = (id, movie) => axios.put(`${API_URL}/${id}`, movie);
+const deleteMovie = (id) => axios.delete(`${API_URL}/${id}`);
+const toggleWatched = (id, movie) => axios.put(`${API_URL}/${id}`, movie);
+const rateMovie = (id, rating) => axios.put(`${API_URL}/${id}`, { rating });
+const reviewMovie = (id, review) => axios.put(`${API_URL}/${id}`, { review });
 
 export {
   getMovies,
