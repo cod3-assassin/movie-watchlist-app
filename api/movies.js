@@ -1,4 +1,4 @@
-import db from "../../db.json";
+import { db } from "../db.json";
 
 export default function handler(req, res) {
   if (req.method === "GET") {
