@@ -13,17 +13,11 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await getMovies();
-        dispatch(fetchMoviesSuccess(response.data));
-      } catch (error) {
-        console.error("Failed to fetch movies", error);
-      }
-    };
-
-    fetchMovies();
+    // Fetch movies from the local JSON data
+    const moviesData = getMovies();
+    dispatch(fetchMoviesSuccess(moviesData));
   }, [dispatch]);
+
   const handleAddMovie = () => {
     // Toggle form visibility
     setIsFormOpen((prevIsFormOpen) => !prevIsFormOpen);
